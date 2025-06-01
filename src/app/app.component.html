@@ -1,0 +1,34 @@
+<h3>Первое дерево</h3>
+
+<ng-template #template1 let-node let-expandAll="expandAll">
+  {{ node.id }} — {{ node.title }}
+  <button (click)="logNode(node.id)">
+    Вывод информации в консоль
+  </button>
+</ng-template>
+
+<app-tree-node
+  [nodes]="treeSignal"
+  [nodeTemplate]="template1"
+></app-tree-node>
+
+<hr />
+
+<h3>Второе дерево</h3>
+
+<ng-template #template2 let-node let-expandAll="expandAll">
+  {{ node.title }}
+  @if (node.children.length > 0) {
+    ({{ node.children.length }})
+    <button (click)="expandAll()">
+      Раскрыть все
+    </button>
+  }
+</ng-template>
+
+<app-tree-node
+  [nodes]="treeSignal"
+  [nodeTemplate]="template2"
+  [opened]="openedSignal2"
+  [expandAllFn]="expandAll2"
+></app-tree-node>

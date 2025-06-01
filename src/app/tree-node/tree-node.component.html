@@ -1,0 +1,26 @@
+<ul class="tree">
+  @for (node of nodes(); track node.id) {             
+    <li>
+      <div class="node" [class.deleted]="node.is_deleted">
+        @if (node.children.length > 0) {              
+          <button class="toggle-btn" (click)="toggle(node)">
+            {{ isOpen(node) ? '▲' : '▼' }}
+          </button>
+        }
+
+        <ng-container
+          *ngTemplateOutlet="nodeTemplate; context: getContext(node)"
+        ></ng-container>
+      </div>
+
+      @if (isOpen(node) && node.children.length > 0) {
+        <app-tree-node
+          [nodes]="childrenSignal(node.children)"
+          [nodeTemplate]="nodeTemplate"
+          [opened]="opened"                   
+          [expandAllFn]="expandAllFn"       
+        ></app-tree-node>
+      }
+    </li>
+  }
+</ul>
